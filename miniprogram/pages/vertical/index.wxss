@@ -1,0 +1,134 @@
+/* pages/vertical/index.wxss */
+page {
+  background-color: #f5f7fa;
+  height: 100%;
+}
+
+.container {
+  height: 100vh;
+  width: 100%;
+}
+
+/* Header */
+.header {
+  padding: 30rpx 40rpx;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #eee;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.status-badge {
+  padding: 8rpx 20rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+.normal { background-color: #07c160; }
+.slow { background-color: #f0ad4e; }
+.congested { background-color: #fa5151; }
+
+/* Video Card */
+.video-card {
+  margin: 20rpx;
+  background: #000;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+}
+
+.live-stream {
+  width: 100%;
+  height: 420rpx;
+  display: block;
+}
+
+/* Decision Card */
+.decision-card {
+  margin: 0 20rpx 20rpx;
+  border-radius: 20rpx;
+  color: #fff;
+  padding: 30rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 15rpx rgba(0,0,0,0.15);
+}
+.decision-card.low { background: linear-gradient(45deg, #07c160, #05a854); }
+.decision-card.medium { background: linear-gradient(45deg, #f0ad4e, #e69500); }
+.decision-card.high { background: linear-gradient(45deg, #fa5151, #e03c3c); }
+
+.risk-level {
+  font-size: 26rpx;
+  opacity: 0.8;
+  margin-bottom: 15rpx;
+  border-bottom: 1rpx solid rgba(255,255,255,0.2);
+  padding-bottom: 10rpx;
+  display: inline-block;
+}
+
+.advice {
+  font-size: 48rpx;
+  font-weight: bold;
+}
+
+/* Dashboard */
+.dashboard {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 20rpx 20rpx;
+  background: #fff;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.metric-item {
+  text-align: center;
+}
+
+.metric-item .value {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.metric-item .label {
+  font-size: 24rpx;
+  color: #888;
+  margin-top: 10rpx;
+}
+
+/* Alerts Panel */
+.alerts-panel {
+  margin: 0 20rpx 40rpx;
+  padding: 20rpx;
+  background: #4a4a4a;
+  border-radius: 15rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.alert-item {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 26rpx;
+  opacity: 0.9;
+}
+
+.alert-item .icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 15rpx;
+}
+
+.footer-spacer {
+  height: 60rpx;
+}

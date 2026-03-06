@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>实时交通监控</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        
+        /* 视频容器 */
+        .video-container {
+            flex: 1;
+            display: flex;
+            flex-direction: row; /* 横向排列 */
+            background-color: #111;
+            gap: 2px;
+        }
+
+        .video-box {
+            flex: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .video-label {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            z-index: 10;
+            color: #fff;
+            border: 1px solid #444;
+        }
+        
+        .live-stream {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* 侧边数据面板 */
+        .side-panel {
+            width: 280px;
+            background: #1a1a1a;
+            border-left: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #00e5ff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+
+        /* 滚动列表 */
+        .vehicle-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .vehicle-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #252525;
+            margin-bottom: 8px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border-left: 4px solid #00e5ff;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .vehicle-id {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .vehicle-class {
+            font-size: 12px;
+            color: #aaa;
+            text-transform: capitalize;
+            margin-bottom: 4px;
+        }
+
+        .vehicle-speed {
+            color: #ffeb3b;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        /* 悬浮状态 */
+        .status-badge {
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            background: rgba(0, 128, 0, 0.8);
+            z-index: 100;
+        }
+        
+        .status-badge.slow { background: rgba(255, 165, 0, 0.8); }
+        .status-badge.congested { background: rgba(255, 0, 0, 0.8); }
+
+        .fps-panel {
+            position: absolute;
+            top: 50px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            line-height: 1.5;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .fps-value { color: #00ff00; font-weight: bold; }
+
+        /* 底部汇总数据 */
+        .bottom-bar {
+            height: 80px;
+            background: #111;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .metric { text-align: center; }
+        .metric .value { font-size: 20px; color: #00e5ff; font-weight: bold; }
+        .metric .label { font-size: 11px; color: #888; margin-top: 4px; }
+    </style>
+</head>
+<body>
+
+    <div style="display: flex; flex: 1; overflow: hidden;">
+        <div class="video-container">
+            <!-- 左侧：原视频 -->
+            <div class="video-box">
+                <div class="video-label">原始视频 (Raw)</div>
+                <img src="/video_raw" class="live-stream" alt="Raw Video">
+            </div>
+
+            <!-- 右侧：AI处理视频 -->
+            <div class="video-box">
+                <div class="video-label">AI 实时检测 (YOLO)</div>
+                <div id="statusBadge" class="status-badge">检测中...</div>
+                <div class="fps-panel">
+                    <div>视频源: <span id="videoFps" class="fps-value">--</span> FPS</div>
+                    <div>展示端: <span id="inferenceFps" class="fps-value">--</span> FPS</div>
+                </div>
+                <img src="/video_feed" class="live-stream" alt="AI Video">
+            </div>
+        </div>
+
+        <!-- 右侧侧边栏：单车数据 -->
+        <div class="side-panel">
+            <div class="panel-title">车辆实时速度列表</div>
+            <div id="vehicleList" class="vehicle-list">
+                <!-- 动态插入车辆数据 -->
+                <div style="color: #666; text-align: center; margin-top: 20px;">等待数据输入...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部数据汇总 -->
+    <div class="bottom-bar">
+        <div class="metric">
+            <div id="avgSpeed" class="value">--</div>
+            <div class="label">全场平均时速 (km/h)</div>
+        </div>
+        <div class="metric">
+            <div id="density" class="value">--</div>
+            <div class="label">当前车流密度 (辆/km)</div>
+        </div>
+        <div class="metric">
+            <div id="vehicleCount" class="value">--</div>
+            <div class="label">监测区域内总数</div>
+        </div>
+    </div>
+
+    <script>
+        function updateData() {
+            fetch('/api/horizontal')
+                .then(response => response.json())
+                .then(res => {
+                    const data = res.data;
+                    const fps = res.fps;
+                    
+                    // 1. 更新汇总数据
+                    document.getElementById('avgSpeed').innerText = data.avg_speed;
+                    document.getElementById('density').innerText = data.density;
+                    document.getElementById('vehicleCount').innerText = data.vehicle_count;
+                    
+                    // 2. 更新FPS
+                    document.getElementById('videoFps').innerText = fps.video_fps;
+                    document.getElementById('inferenceFps').innerText = fps.inference_fps;
+                    
+                    // 3. 更新状态
+                    const badge = document.getElementById('statusBadge');
+                    badge.innerText = data.status;
+                    badge.className = 'status-badge'; 
+                    if (data.status.includes('缓行')) badge.classList.add('slow');
+                    else if (data.status.includes('拥堵')) badge.classList.add('congested');
+
+                    // 4. 更新单车滚动列表
+                    const listContainer = document.getElementById('vehicleList');
+                    if (data.vehicle_list && data.vehicle_list.length > 0) {
+                        let html = '';
+                        data.vehicle_list.forEach(v => {
+                            html += `
+                                <div class="vehicle-item">
+                                    <div>
+                                        <div class="vehicle-class">${v.class_name}</div>
+                                        <div class="vehicle-id">ID: ${v.id}</div>
+                                    </div>
+                                    <span class="vehicle-speed">${v.speed} km/h</span>
+                                </div>
+                            `;
+                        });
+                        listContainer.innerHTML = html;
+                    } else if (data.vehicle_count === 0) {
+                        listContainer.innerHTML = '<div style="color: #666; text-align: center; margin-top: 20px;">暂无活跃车辆</div>';
+                    }
+                })
+                .catch(err => console.error('Data fetch error:', err));
+        }
+
+        // 每秒更新一次数据
+        setInterval(updateData, 1000);
+        updateData(); 
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!-- pages/vertical/index.wxml -->
+<scroll-view class="container" scroll-y="true">
+  <!-- 标题栏 -->
+  <view class="header">
+    <text class="title">纵向支路协同</text>
+    <view class="status-badge {{mainStatusClass}}">
+      主路: {{mainStatus}}
+    </view>
+  </view>
+
+  <!-- 视频区域 -->
+  <view class="video-card">
+    <image class="live-stream" src="{{videoUrl}}" mode="aspectFit"></image>
+  </view>
+
+  <!-- 核心决策卡片 -->
+  <view class="decision-card {{riskClass}}">
+    <view class="decision-header">
+      <text class="risk-level">风险等级: {{riskLevel}}</text>
+    </view>
+    <view class="decision-body">
+      <text class="advice">{{advice}}</text>
+    </view>
+  </view>
+
+  <!-- 数据仪表盘 -->
+  <view class="dashboard">
+    <view class="metric-item">
+      <text class="value">{{mergeGap}}s</text>
+      <text class="label">安全汇入间隙</text>
+    </view>
+    <view class="metric-item">
+      <text class="value">{{canMerge ? '是' : '否'}}</text>
+      <text class="label">是否可汇入</text>
+    </view>
+  </view>
+
+  <!-- 告警提示 -->
+  <view class="alerts-panel" wx:if="{{showVoiceAlert || showVibration}}">
+    <view class="alert-item" wx:if="{{showVoiceAlert}}">
+      <image src="/assets/icons/voice.png" class="icon"></image>
+      <text>语音播报中...</text>
+    </view>
+    <view class="alert-item" wx:if="{{showVibration}}">
+      <image src="/assets/icons/vibrate.png" class="icon"></image>
+      <text>震动反馈</text>
+    </view>
+  </view>
+
+  <view class="footer-spacer"></view>
+</scroll-view>

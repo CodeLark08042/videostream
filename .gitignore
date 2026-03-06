@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.xml
+
+# Large Models & Binaries (Important for GitHub)
+*.pt
+*.engine
+*.onnx
+*.exe
+*.log
+
+# Video Files
+*.mp4
+*.avi
+*.mov
+
+# OS
+.DS_Store
+Thumbs.db

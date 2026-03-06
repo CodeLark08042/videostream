@@ -1,0 +1,74 @@
+<!-- pages/horizontal/index.wxml -->
+<scroll-view class="container" scroll-y="true">
+  <!-- 标题栏 -->
+  <view class="header">
+    <text class="title">横向主干道实时监控</text>
+    <view class="status-badge {{trafficStatus === '拥堵' ? 'congested' : (trafficStatus === '缓行' ? 'slow' : 'normal')}}">
+      {{trafficStatus}}
+    </view>
+  </view>
+
+  <!-- 视频对比区域 -->
+  <view class="video-section">
+    <!-- AI 处理视频 -->
+    <view class="video-card">
+      <view class="video-label">AI 实时检测 (YOLO)</view>
+      <image class="live-stream" src="{{videoFeedUrl}}" mode="aspectFit" lazy-load="false"></image>
+      <view class="fps-tag">展示端: {{inferenceFps}} FPS</view>
+    </view>
+
+    <!-- 原始视频 -->
+    <view class="video-card">
+      <view class="video-label">原始视频 (Raw)</view>
+      <image class="live-stream" src="{{videoRawUrl}}" mode="aspectFit" lazy-load="false"></image>
+      <view class="fps-tag">视频源: {{videoFps}} FPS</view>
+    </view>
+  </view>
+
+  <!-- 数据仪表盘 -->
+  <view class="dashboard">
+    <view class="metric-grid">
+      <view class="metric-item">
+        <text class="value">{{avgSpeed}}</text>
+        <text class="label">平均时速 (km/h)</text>
+      </view>
+      <view class="metric-item">
+        <text class="value">{{density}}</text>
+        <text class="label">车流密度 (辆/km)</text>
+      </view>
+      <view class="metric-item">
+        <text class="value">{{vehicleCount}}</text>
+        <text class="label">当前车辆总数</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 单车速度滚动列表 -->
+  <view class="vehicle-panel">
+    <view class="panel-header">
+      <text class="panel-title">单车实时速度追踪</text>
+      <text class="panel-desc">实时追踪区域内最新 ID</text>
+    </view>
+    
+    <block wx:if="{{vehicleList.length > 0}}">
+      <view class="vehicle-list">
+        <view class="vehicle-item" wx:for="{{vehicleList}}" wx:key="id">
+          <view class="id-box">
+            <text class="class-name">{{item.class_name}}</text>
+            <text class="id-value">ID: {{item.id}}</text>
+          </view>
+          <view class="speed-box">
+            <text class="speed-value">{{item.speed}}</text>
+            <text class="speed-unit">km/h</text>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="no-data">
+      <text>暂无活跃车辆数据...</text>
+    </view>
+  </view>
+
+  <!-- 底部留白 -->
+  <view class="footer-spacer"></view>
+</scroll-view>

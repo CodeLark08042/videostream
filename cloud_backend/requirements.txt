@@ -1,0 +1,7 @@
+ultralytics
+opencv-python-headless
+flask
+flask-cors
+numpy
+requests
+waitress

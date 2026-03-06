@@ -1,0 +1,213 @@
+/* pages/horizontal/index.wxss */
+page {
+  background-color: #f5f7fa;
+  height: 100%;
+}
+
+.container {
+  height: 100vh;
+  width: 100%;
+}
+
+/* Header Section */
+.header {
+  padding: 30rpx 40rpx;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #eee;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.status-badge {
+  padding: 8rpx 24rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.normal { background-color: #07c160; }
+.slow { background-color: #f0ad4e; }
+.congested { background-color: #fa5151; }
+
+/* Video Section */
+.video-section {
+  padding: 20rpx;
+}
+
+.video-card {
+  background: #000;
+  border-radius: 20rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+  position: relative;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+}
+
+.video-label {
+  position: absolute;
+  top: 15rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 6rpx;
+  z-index: 10;
+}
+
+.live-stream {
+  width: 100%;
+  height: 420rpx;
+  display: block;
+}
+
+.fps-tag {
+  position: absolute;
+  bottom: 15rpx;
+  right: 15rpx;
+  background: rgba(0,0,0,0.5);
+  color: #00ff00;
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+
+/* Dashboard Section */
+.dashboard {
+  padding: 0 20rpx 20rpx;
+}
+
+.metric-grid {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.metric-item {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.metric-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 20%;
+  height: 60%;
+  width: 1rpx;
+  background: #eee;
+}
+
+.metric-item .value {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.metric-item .label {
+  font-size: 20rpx;
+  color: #95a5a6;
+  margin-top: 10rpx;
+}
+
+/* Vehicle List Section */
+.vehicle-panel {
+  margin: 0 20rpx 40rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.panel-header {
+  margin-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  padding-bottom: 15rpx;
+}
+
+.panel-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+
+.panel-desc {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 6rpx;
+}
+
+.vehicle-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.vehicle-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f9f9f9;
+}
+
+.id-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.class-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  text-transform: capitalize; /* 首字母大写 */
+}
+
+.id-value {
+  font-size: 22rpx;
+  color: #888;
+  font-family: monospace;
+}
+
+.speed-box {
+  text-align: right;
+}
+
+.speed-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #007aff;
+  font-family: monospace;
+}
+
+.speed-unit {
+  font-size: 20rpx;
+  color: #999;
+  margin-left: 6rpx;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #ccc;
+  font-size: 26rpx;
+}
+
+.footer-spacer {
+  height: 60rpx;
+}

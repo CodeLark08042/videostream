@@ -1,0 +1,33 @@
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 60rpx;
+  color: #333;
+}
+.card {
+  width: 90%;
+  height: 300rpx;
+  margin-bottom: 40rpx;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.15);
+}
+.horizontal {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+.vertical {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+.role-title {
+  font-size: 44rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+.role-desc {
+  font-size: 28rpx;
+  opacity: 0.9;
+}

@@ -1,0 +1,8 @@
+opencv-python-headless
+numpy
+flask
+flask-cors
+ultralytics
+torch
+torchvision
+torchaudio

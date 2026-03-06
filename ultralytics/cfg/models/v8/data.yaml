@@ -1,0 +1,8 @@
+train: D:\Python project\PythonProject2\car\train   # train images (relative to 'path') 128 images
+val: D:\Python project\PythonProject2\car\val  # val images (relative to 'path') 128 images
+test: D:\Python project\PythonProject2\car\test
+
+nc: 1
+
+# Classes
+names: ['car']

@@ -1,0 +1,8 @@
+opencv-python-headless
+numpy
+flask
+flask-cors
+ultralytics
+# torch  <-- AutoDL 环境通常已预装 PyTorch，避免覆盖导致 CUDA 失效
+# torchvision
+# torchaudio

@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="title">请选择您的角色</view>
+  
+  <view class="card horizontal" bindtap="goToHorizontal">
+    <text class="role-title">横向主干道车主</text>
+    <text class="role-desc">查看实时路况与拥堵预警</text>
+  </view>
+
+  <view class="card vertical" bindtap="goToVertical">
+    <text class="role-title">纵向支路车主</text>
+    <text class="role-desc">查看汇入分析与安全建议</text>
+  </view>
+</view>

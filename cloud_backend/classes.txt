@@ -1,0 +1,9 @@
+person
+bicycle
+car
+motorcycle
+bus
+truck
+van
+tricycle
+electric_vehicle
